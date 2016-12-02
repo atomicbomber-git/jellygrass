@@ -165,7 +165,7 @@
 
             <p class="control">
                 <label class="label"> Ciphertext: </label>
-                <textarea class="textarea" placeholder="Encrypted text..."> {{ process_text }} </textarea>
+                <textarea v-bind:value="process_text" class="textarea" placeholder="Encrypted text..."></textarea>
             </p>
         
         </div>
