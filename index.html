@@ -2,10 +2,172 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title> Vue.js Experiment </title>
-    </head>
-    
-    <body>
+        <title> James' Encrypter </title>
+        <link rel="stylesheet" type="text/css" href="./css/bulma.css">
+        <script src="./js/vue.js"> </script>
+        <script>
 
+            /* Helper modulo function */
+            function mod(n, m) {
+                return ((n % m) + m) % m;
+            }
+
+            /* Helper variables */
+            minLower = 'a'.charCodeAt();
+            maxLower = 'z'.charCodeAt();
+            minUpper = 'A'.charCodeAt();
+            maxUpper = 'Z'.charCodeAt();
+
+            function caesarEncrypt (char, offset = 1) {
+
+                charCode = char.charCodeAt();
+                newChar = char;
+
+                if (charCode >= minLower && charCode <= maxLower) {
+
+                    newChar = String.fromCharCode(
+                        mod((charCode + offset - minLower), 26) + minLower
+                    );
+
+                }
+                else if (charCode >= minUpper && charCode <= maxUpper) {
+
+                    newChar = String.fromCharCode(
+                        mod((charCode + offset - minUpper), 26) + minUpper
+                    );
+
+                }
+   
+                return newChar;
+            }
+
+            function caesarDecrypt (char, offset) {
+                charCode = char.charCodeAt();
+                newChar = char;
+
+                if (charCode >= minLower && charCode <= maxLower) {
+
+                    newChar = String.fromCharCode(
+                        mod((charCode - offset - minLower), 26) + minLower
+                    );
+
+                }
+                else if (charCode >= minUpper && charCode <= maxUpper) {
+
+                    newChar = String.fromCharCode(
+                        mod((charCode - offset - minUpper), 26) + minUpper
+                    );
+
+                }
+   
+                return newChar;
+            }
+
+            window.onload = function () {
+                $app = new Vue({
+                    el: "#app",
+                    data: {
+                        offset: 1,
+                        message: "Hello world!",
+                        mode: "decrypt",
+                        algorithm: "caesar"
+
+                    },
+                    computed: {
+                        caesar_encrypt: function () {
+                            return this.message
+                                .split("")
+                                .map( (letter) => { return caesarEncrypt(letter, this.offset) } )
+                                .join("");
+                        },
+
+                        caesar_decrypt: function () {
+                            return $text
+                                .split("")
+                                .map( (letter) => { return caesarDecrypt(letter, this.offset) } )
+                                .join("");
+                        },
+
+                        process_text: function () {
+                            if ( this.mode === "decrypt" ) {
+                                switch ( this.algorithm ) {
+                                    case "caesar":
+                                        return this.message.split("")
+                                            .map( (letter) => { return caesarEncrypt (letter, this.offset) } )
+                                            .join("");
+                                }
+                            }
+                            else if ( this.mode === "encrypt" ) {
+                                switch ( this.algorithm ) {
+                                    case "caesar":
+                                        return this.message.split("")
+                                            .map( (letter) => { return caesarDecrypt (letter, this.offset) } )
+                                            .join("");
+                                }
+                            }
+                        },
+
+                        toggle_button_class: function () {
+                            if ( this.mode === "decrypt" ) { return "is-primary"; }
+                            return "is-danger";
+                        },
+
+                        toggle_button_label: function () {
+                            if ( this.mode === "decrypt" ) { return "In Encrypt Mode"; }
+                            return "In Decrypt Mode";
+                        }
+
+                        
+                    },
+
+                    methods: {
+                        toggle_mode: function () {
+                            if ( this.mode === "encrypt" ) {
+                                this.mode = "decrypt"
+                                return; 
+                            } 
+                            this.mode = "encrypt";
+                        }
+                    }
+                });
+            }
+        </script>
+
+        <style>
+            #app {
+                width: 550px;
+                margin: 20px auto 0px auto;
+            }
+        </style>
+
+
+    </head>
+
+    <body>
+        <div id="app">
+            <h1 class="title is-2"> James' Portable Encrypter </h1>
+            <p class="subtitle is-5"> The awesomest encrypter ever made! </p>
+
+            <p class="control">
+                <label class="label"> Mode: </label>
+                <button class="button" v-on:click="toggle_mode()" v-bind:class="this.toggle_button_class"> {{ toggle_button_label }} </button>
+            </p>
+
+            <p class="control">
+                <label class="label"> Plaintext: </label>
+                <textarea v-model="message" class="textarea" placeholder="Insert plaintext here..."></textarea>
+            </p>
+
+            <p class="control">
+                <label class="label"> Offset: </label>
+                <input v-model="offset" class="input" type="number" placeholder="Amount of offset...">
+            </p>
+
+            <p class="control">
+                <label class="label"> Ciphertext: </label>
+                <textarea class="textarea" placeholder="Encrypted text..."> {{ process_text }} </textarea>
+            </p>
+        
+        </div>
     </body>
 </html>
