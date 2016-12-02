@@ -115,9 +115,18 @@
                         toggle_button_label: function () {
                             if ( this.mode === "decrypt" ) { return "In Encrypt Mode"; }
                             return "In Decrypt Mode";
-                        }
+                        },
 
-                        
+                        input_field_label: function () {
+                            if ( this.mode === "decrypt" ) { return "Plaintext"; }
+                            return "Ciphertext";
+                        },
+
+                        output_field_label: function () {
+                            if ( this.mode === "decrypt" ) { return "Ciphertext"; }
+                            return "Plaintext";
+                        }
+          
                     },
 
                     methods: {
@@ -154,7 +163,7 @@
             </p>
 
             <p class="control">
-                <label class="label"> Plaintext: </label>
+                <label class="label"> {{ input_field_label }}: </label>
                 <textarea v-model="message" class="textarea" placeholder="Insert plaintext here..."></textarea>
             </p>
 
@@ -164,7 +173,7 @@
             </p>
 
             <p class="control">
-                <label class="label"> Ciphertext: </label>
+                <label class="label"> {{ output_field_label }}: </label>
                 <textarea v-bind:value="process_text" class="textarea" placeholder="Encrypted text..."></textarea>
             </p>
         
