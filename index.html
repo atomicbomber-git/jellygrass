@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         <title> James' Encrypter </title>
         <link rel="stylesheet" type="text/css" href="./css/bulma.css">
@@ -144,7 +145,7 @@
 
         <style>
             #app {
-                width: 550px;
+                max-width: 550px;
                 margin: 20px auto 0px auto;
             }
         </style>
@@ -153,30 +154,31 @@
     </head>
 
     <body>
-        <div id="app">
-            <h1 class="title is-2"> James' Portable Encrypter </h1>
-            <p class="subtitle is-5"> The awesomest encrypter ever made! </p>
+        <div id="app" class="columns">
+            <div class="column">
+            <h1 class="title is-4"> James' Portable Encrypter </h1>
+                <p class="subtitle is-5"> The awesomest encrypter ever made! </p>
 
-            <p class="control">
-                <label class="label"> Mode: </label>
-                <button class="button" v-on:click="toggle_mode()" v-bind:class="this.toggle_button_class"> {{ toggle_button_label }} </button>
-            </p>
+                <p class="control">
+                    <label class="label"> Mode: </label>
+                    <button class="button" v-on:click="toggle_mode()" v-bind:class="this.toggle_button_class"> {{ toggle_button_label }} </button>
+                </p>
 
-            <p class="control">
-                <label class="label"> {{ input_field_label }}: </label>
-                <textarea v-model="message" class="textarea" placeholder="Insert plaintext here..."></textarea>
-            </p>
+                <p class="control">
+                    <label class="label"> {{ input_field_label }}: </label>
+                    <textarea v-model="message" class="textarea" placeholder="Insert plaintext here..."></textarea>
+                </p>
 
-            <p class="control">
-                <label class="label"> Offset: </label>
-                <input v-model="offset" class="input" type="number" placeholder="Amount of offset...">
-            </p>
+                <p class="control">
+                    <label class="label"> Offset: </label>
+                    <input v-model="offset" class="input" type="number" placeholder="Amount of offset...">
+                </p>
 
-            <p class="control">
-                <label class="label"> {{ output_field_label }}: </label>
-                <textarea v-bind:value="process_text" class="textarea" placeholder="Encrypted text..."></textarea>
-            </p>
-        
+                <p class="control">
+                    <label class="label"> {{ output_field_label }}: </label>
+                    <textarea v-bind:value="process_text" class="textarea" placeholder="Encrypted text..."></textarea>
+                </p>
+            </div>
         </div>
     </body>
 </html>
